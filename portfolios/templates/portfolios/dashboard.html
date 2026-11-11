@@ -1,0 +1,72 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Análisis de portafolios | Abaqus</title>
+    <link rel="stylesheet" href="{% static 'portfolios/dashboard.css' %}">
+    <script defer src="{% static 'portfolios/dashboard.js' %}"></script>
+</head>
+<body>
+    <header class="masthead">
+        <div class="shell masthead-inner">
+            <span class="brand">ABAQUS</span>
+            <span class="masthead-label">Prueba técnica · Python</span>
+        </div>
+    </header>
+    <main class="shell" id="dashboard"
+          data-evolution-url="{% url 'portfolios:evolution' %}"
+          data-positions-url="{% url 'portfolios:positions' %}">
+        <header class="intro">
+            <p class="eyebrow">Análisis histórico</p>
+            <h1>Evolución de portafolios</h1>
+            <p>Compara el valor y la composición de dos portafolios con cantidades fijas por activo.</p>
+        </header>
+        <noscript><p class="status">Activa JavaScript para consultar y graficar los datos de la API.</p></noscript>
+        {% if start %}
+        <form id="date-form" class="panel filters">
+            <div class="filter-copy">
+                <h2>Período de comparación</h2>
+                <p>Datos disponibles del {{ start }} al {{ end }}.</p>
+            </div>
+            <label>Desde
+                <input type="date" name="fecha_inicio" value="{{ start }}" min="{{ start }}" max="{{ end }}" required>
+            </label>
+            <label>Hasta
+                <input type="date" name="fecha_fin" value="{{ end }}" min="{{ start }}" max="{{ end }}" required>
+            </label>
+            <button type="submit">Aplicar</button>
+        </form>
+        <p id="chart-status" class="status" role="status"></p>
+        <div id="results" hidden>
+            <section class="panel" aria-labelledby="value-title">
+                <div class="section-header">
+                    <div>
+                        <h2 id="value-title">Valor total</h2>
+                        <p>Valor de mercado de ambos portafolios en millones de $.</p>
+                    </div>
+                    <ul id="value-legend" class="legend"></ul>
+                </div>
+                <div id="value-chart" class="chart-frame"></div>
+                <div id="summary" class="summary"></div>
+            </section>
+            <section class="panel" aria-labelledby="weights-title">
+                <h2 id="weights-title">Composición por activo</h2>
+                <p>Participación porcentual sobre el valor total de cada portafolio.</p>
+                <div id="weight-charts" class="weight-grid"></div>
+                <ul id="weight-legend" class="legend asset-legend"></ul>
+            </section>
+        </div>
+        {% else %}
+        <p class="status panel">Todavía no hay datos. Ejecuta <code>python manage.py importar_datos</code> y recarga esta página.</p>
+        {% endif %}
+        <section class="panel" aria-labelledby="positions-title">
+            <h2 id="positions-title">Posiciones iniciales</h2>
+            <p>Pesos y cantidades al constituir cada portafolio.</p>
+            <p id="positions-status" class="status" role="status"></p>
+            <div id="positions" class="weight-grid"></div>
+        </section>
+    </main>
+</body>
+</html>
