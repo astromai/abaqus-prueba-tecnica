@@ -51,10 +51,10 @@ python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe manage.py migrate
 .\.venv\Scripts\python.exe manage.py importar_datos
-.\.venv\Scripts\python.exe manage.py runserver 127.0.0.1:8001
+.\.venv\Scripts\python.exe manage.py runserver
 ```
 
-Abre <http://127.0.0.1:8001/>. En esta copia, `python manage.py runserver` **no está configurado para usar el puerto 8001 automáticamente**; por eso se especifica el puerto en el comando. Para Linux o macOS, usa `.venv/bin/python` en lugar de `.venv\Scripts\python.exe`.
+Abre <http://127.0.0.1:8001/>. `python manage.py runserver` usa `127.0.0.1:8001` por defecto y escucha solo conexiones desde este equipo. Para Linux o macOS, usa `.venv/bin/python` en lugar de `.venv\Scripts\python.exe`.
 
 El comando de importación usa `datos.xlsx` por defecto y acepta una ruta alternativa:
 
@@ -89,3 +89,5 @@ Si continuara el proyecto, parametrizaría el capital inicial y la fecha de cons
 ### Posiciones iniciales
 
 ![Posiciones iniciales de ambos portafolios](public/posiciones-iniciales.png)
+
+
